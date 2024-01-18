@@ -1,19 +1,84 @@
+
 from tkinter import *
 from random import *
 from tkinter import messagebox
-import csv
 
-apk = Tk()
+root=Tk()
+entrer = None
+root.title('Password Manager')
+root.geometry('925x500+300+200')
+root.configure(bg="#fff")
+root.resizable(False,False)
 
-apk.title("Password Manager")
 
-img = PhotoImage(file="a.png")
-apk.iconphoto(False,img) 
 
-background_image = PhotoImage(file="e.png")
+def Enter():
+    global entrer
+    global entrer2
+    global entrer3
+    global entrer4
+    global entry_password
+    username=user.get()
+    if not username.isalpha():
+        messagebox.showerror("Error","the username can't contain numbers !")
+    elif username.isalpha():
+        screen=Toplevel(root)
+        screen.title("Password Manager")
+        img = PhotoImage(file="a.png")
+        screen.iconphoto(False,img) 
+        screen.geometry('925x500+300+200')
 
-background_label = Label(apk, image=background_image)
-background_label.place(relwidth=1, relheight=1)
+        cr = Label(screen, text="Generate Weak Password :", font=('Arial', 10), padx=5, pady=20)
+        cr.grid(row=0, column=4)
+
+        but = Button(screen, text="Generate", command=rand)
+        but.grid(row=0, column=6, padx=5, pady=20)
+
+        entrer = Entry(screen, text='', width=40)
+        entrer.grid(row=0, column=5, padx=5, pady=20)
+
+        save = Button(screen, text="Save", command=Save)
+        save.grid(row=0, column=7, padx=5, pady=20)
+
+        clear = Button(screen, text="Clear", command=Clear)
+        clear.grid(row=0, column=8, padx=5, pady=20)
+
+        cr2 = Label(screen, text="Generate Strong Password :", font=('Arial', 10))
+        cr2.grid(row=1,column=4, padx=5,pady=20)
+
+        entrer2 = Entry(screen, text='',width=40)
+        entrer2.grid(row=1,column=5, padx=5,pady=20)
+
+        but2 = Button(screen, text="Generate", command=rand2)
+        but2.grid(row=1,column=6, padx=5,pady=20)
+
+        save2 = Button(screen, text="Save", command=Save2)
+        save2.grid(row=1,column=7,padx=5,pady=20)
+
+        clear2 = Button(screen, text="Clear", command=Clear2)
+        clear2.grid(row=1,column=8,padx=5,pady=20)
+
+        entrer3 = Entry(screen, text='')
+        entrer3.grid(row=2,column=5, padx=5,pady=20)
+        but3 = Button(screen, text="Generate", command=rand3)
+        but3.grid(row=2,column=6, padx=5,pady=20)
+        save3 = Button(screen, text="Save", command=Save3)
+        save3.grid(row=2,column=7,padx=5,pady=20)
+        clear3 = Button(screen, text="Clear", command=Clear3)
+        clear3.grid(row=2,column=8,padx=5,pady=20)
+        cr4 = Label(screen, text="Specify Password Length :", font=('Arial', 10))
+        cr4.grid(row=2,column=4, padx=5,pady=20)
+        entrer4 = Entry(screen, text='')
+        entrer4.grid(row=3,column=5, padx=5,pady=20)
+
+        br7 = Label(screen, text="Check Password Strength :", font=('Arial', 10))
+        br7.grid(row=4,column=4, padx=5,pady=20)
+        entry_password = Entry(screen, text='',width=40)
+        entry_password.grid(row=4,column=5, padx=5,pady=20)
+        but7 = Button(screen, text="Check", command=rand7)
+        but7.grid(row=4,column=6, padx=5,pady=20)
+        clear4 = Button(screen, text="Clear", command=Clear4)
+        clear4.grid(row=4,column=7,padx=5,pady=20)
 
 def rand():
     password = ''
@@ -29,58 +94,6 @@ def Save():
 def Clear():
     entrer.delete(0,END)
 
-def Data():
-    w =  web_entry.get()
-    u = user_entry.get()
-    i = id_entry.get()
-    p = ps_entry.get()
-    y = ["Website Or App Name :",w,"Username :",u,"ID :",i,"Password :",p]
-    x= ["Website","Username","ID","Password"]
-    z= [w , u , i , p]
-    data.insert(0,y)
-    with open("data.csv","a") as f:
-        writer = csv.writer(f,delimiter=";")
-        writer.writerow(x)
-        writer.writerow(z)
-
-def ClearD():
-    data.delete(0,END)
-    
-cr = Label(apk, text="Generate Weak Password :", font=('Arial', 10),bg="white")
-but = Button(apk, text="Generate", command=rand)
-entrer = Entry(apk, text='',width=40)
-save = Button(apk, text="Save", command=Save)
-clear = Button(apk, text="Clear", command=Clear)
-web = Label(apk, text="Website Or App Name :", font=('Arial', 10),bg="white")
-web_entry = Entry(apk, text='',width=40)
-user = Label(apk, text="Username :", font=('Arial', 10),bg="white")
-user_entry = Entry(apk, text='',width=40)
-id = Label(apk, text="ID :", font=('Arial', 10),bg="white")
-id_entry = Entry(apk, text='',width=40)
-ps = Label(apk, text="Password :", font=('Arial', 10),bg="white")
-ps_entry = Entry(apk, text='',width=40)
-data_label = Label(apk, text="DATA :", font=('Arial', 10),bg="white")
-data = Entry(apk,width=105)
-Save9 = Button(apk, text="Save Data", command=Data)
-clear9 = Button(apk, text="clear",command=ClearD)
-
-cr.grid(row=0,column=4,padx=5,pady=20)
-but.grid(row=0,column=6,padx=5,pady=20)
-entrer.grid(row=0,column=5,padx=5,pady=20)
-save.grid(row=0,column=7,padx=5,pady=20)
-clear.grid(row=0,column=8,padx=5,pady=20)
-web_entry.grid(row=0,column=1,padx=5,pady=20)
-web.grid(row=0,column=0,padx=5,pady=20)
-user.grid(row=1,column=0,padx=5,pady=20)
-user_entry.grid(row=1,column=1,padx=5,pady=20)
-id.grid(row=2,column=0,padx=5,pady=20)
-id_entry.grid(row=2,column=1,padx=5,pady=20)
-ps.grid(row=3,column=0,padx=5,pady=20)
-ps_entry.grid(row=3,column=1,padx=5,pady=20)
-data.grid(row=5,column=1,padx=5,pady=20)
-data_label.grid(row=5,column=0,padx=5,pady=40)
-Save9.grid(row=5,column=4)
-clear9.grid(row=5,column=5)
 
 def rand2():
     password = ''
@@ -99,17 +112,22 @@ def Clear2():
     except:
         messagebox.showerror("Error","Error404")
 
-cr2 = Label(apk, text="Generate Strong Password :", font=('Arial', 10),bg="white")
-entrer2 = Entry(apk, text='',width=40)
-but2 = Button(apk, text="Generate", command=rand2)
-save2 = Button(apk, text="Save", command=Save2)
-clear2 = Button(apk, text="Clear", command=Clear2)
+def rand2():
+    password = ''
+    for i in range (13):
+        password = password + chr(randint(33,126))
+    entrer2.insert(0,password)
 
-cr2.grid(row=1,column=4, padx=5,pady=20)
-but2.grid(row=1,column=6, padx=5,pady=20)
-entrer2.grid(row=1,column=5, padx=5,pady=20)
-save2.grid(row=1,column=7,padx=5,pady=20)
-clear2.grid(row=1,column=8,padx=5,pady=20)
+def Save2():
+    password = entrer2.get()
+    with open("strong_passwords.txt", "a") as f:
+        f.write(password)
+
+def Clear2():
+    try:
+        entrer2.delete(0,END)
+    except:
+        messagebox.showerror("Error","Error404")
 
 def rand3():
     try:
@@ -119,7 +137,7 @@ def rand3():
             password = password + chr(randint(33,126))
         entrer4.insert(0,password)
     except:
-        messagebox.showerror("Error","Error404")
+        messagebox.showerror("Error","Please write a number")
 
 def Save3():
     try:
@@ -128,26 +146,11 @@ def Save3():
             f.write(password)
     except:
         messagebox.showerror("Error","Error404")
-
 def Clear3():
     try:
         entrer4.delete(0,END)
     except:
         messagebox.showerror("Error","Error404")
-
-cr4 = Label(apk, text="Specify Password Length :", font=('Arial', 10),bg="white")
-entrer3 = Entry(apk, text='')
-but3 = Button(apk, text="Generate", command=rand3)
-entrer4 = Entry(apk, text='')
-save3 = Button(apk, text="Save", command=Save3)
-clear3 = Button(apk, text="Clear", command=Clear3)
-
-cr4.grid(row=2,column=4, padx=5,pady=20)
-but3.grid(row=2,column=6, padx=5,pady=20)
-entrer3.grid(row=2,column=5, padx=5,pady=20)
-entrer4.grid(row=3,column=5, padx=5,pady=20)
-save3.grid(row=2,column=7,padx=5,pady=20)
-clear3.grid(row=2,column=8,padx=5,pady=20)
 
 def rand7():
     try:
@@ -161,20 +164,43 @@ def rand7():
                 messagebox.showinfo("Result", "Password is strong.")
     except:
         messagebox.showerror("Error")
-
 def Clear4():
     entry_password.delete(0,END)
 
-br7 = Label(apk, text="Check Password Strength :", font=('Arial', 10))
-entry_password = Entry(apk, text='',width=40)
-but7 = Button(apk, text="Check", command=rand7)
-clear4 = Button(apk, text="Clear", command=Clear4)
 
-br7.grid(row=4,column=4, padx=5,pady=20)
-entry_password.grid(row=4,column=5, padx=5,pady=20)
-but7.grid(row=4,column=6, padx=5,pady=20)
-clear4.grid(row=4,column=7,padx=5,pady=20)
+        
+img = PhotoImage(file="a.png")
+root.iconphoto(False,img)
 
-apk.resizable(width=False,height=False)
+img=PhotoImage(file='login.png')
+Label(root,image=img,bg='white').place(x=50,y=50)
 
-apk.mainloop()
+frame=Frame(root,width=350,height=350,bg="white")
+frame.place(x=480,y=70)
+
+heading=Label(frame,text='Please write your username :',fg='black',bg='white',font=('Microsoft YaHei UI Light',10,'bold'))
+heading.place(x=22,y=55)
+
+
+Button(frame,width=39,pady=7,text='Enter',bg='#57a1f8',fg='white',border=0,command=Enter).place(x=35,y=120)
+heading=Label(frame,text='Welcome',fg='#58a1f8',bg='white',font=('Microsoft YaHei UI Light',23,'bold'))
+heading.place(x=100,y=5)
+
+def on_enter(e):
+    user.delete(0,"end")
+
+def on_leave(e):
+    name=user.get()
+    if name=='':
+        user.insert(0,'Username')
+
+user= Entry(frame,width=25,fg='black',border=0,bg='white',font=('Microsoft YaHei UI Light',11))
+user.place(x=30,y=80)
+user.insert(0,"Username")
+user.bind('<FocusIn>', on_enter)
+user.bind('<FocusOut>', on_leave)
+
+Frame(frame,width=295,height=2,bg='black').place(x=25,y=107)
+
+root.mainloop()
+
