@@ -2,6 +2,7 @@
 from tkinter import *
 from random import *
 from tkinter import messagebox
+import csv
 
 root=Tk()
 entrer = None
@@ -13,11 +14,10 @@ root.resizable(False,False)
 
 
 def Enter():
-    global entrer
-    global entrer2
-    global entrer3
-    global entrer4
-    global entry_password
+    global wp_ok
+    global sp_ok
+    global eg_ok
+
     username=user.get()
     if not username.isalpha():
         messagebox.showerror("Error","the username can't contain numbers !")
@@ -26,149 +26,110 @@ def Enter():
         screen.title("Password Manager")
         img = PhotoImage(file="a.png")
         screen.iconphoto(False,img) 
-        screen.geometry('925x500+300+200')
+        screen.geometry('560x150')
 
-        cr = Label(screen, text="Generate Weak Password :", font=('Arial', 10), padx=5, pady=20)
-        cr.grid(row=0, column=4)
 
-        but = Button(screen, text="Generate", command=rand)
-        but.grid(row=0, column=6, padx=5, pady=20)
+        wp = Label(screen, text="Generate Weak Password :", font=('Arial', 10))
+        wp.grid(row=0,column=0,padx=5,pady=5)
+        wp_ok = Entry(screen, text='',width=35)
+        wp_ok.grid(row=0,column=1)
+        gen_wp = Button(screen, text="Generate", command=rand)
+        gen_wp.grid(row=0,column=2,padx=10,pady=5)
+        save_wp = Button(screen, text="Save", command=Save)
+        save_wp.grid(row=0,column=3,padx=0,pady=5)
+        clear_wp = Button(screen, text="Clear", command=Clear)
+        clear_wp.grid(row=0,column=4,padx=5,pady=5)
 
-        entrer = Entry(screen, text='', width=40)
-        entrer.grid(row=0, column=5, padx=5, pady=20)
+        sp = Label(screen, text="Generate Strong Password :", font=('Arial', 10))
+        sp.grid(row=1,column=0, padx=5,pady=5)
+        sp_ok = Entry(screen, text='',width=35)
+        sp_ok.grid(row=1,column=1)
+        gen_sp = Button(screen, text="Generate", command=rand2)
+        gen_sp.grid(row=1,column=2, padx=0,pady=5)
+        save_sp = Button(screen, text="Save", command=Save2)
+        save_sp.grid(row=1,column=3,padx=0,pady=5)
+        clear_sp = Button(screen, text="Clear", command=Clear2)
+        clear_sp.grid(row=1,column=4,padx=5,pady=5)
 
-        save = Button(screen, text="Save", command=Save)
-        save.grid(row=0, column=7, padx=5, pady=20)
+        eg=Label(screen,text="Generate Email :",font=('Arial', 10))
+        eg.grid(row=2,column=0,padx=5,pady=5)
+        eg_ok = Entry(screen,text="",width=35)
+        eg_ok.grid(row=2,column=1)
+        eg_button=Button(screen, text="Generate",command=generate_email)
+        eg_button.grid(row=2,column=2)
+        save_eg = Button(screen, text="Save", command=Save3)
+        save_eg.grid(row=2,column=3,padx=0,pady=5)
+        clear_eg = Button(screen, text="Clear", command=Clear3)
+        clear_eg.grid(row=2,column=4,padx=5,pady=5)
 
-        clear = Button(screen, text="Clear", command=Clear)
-        clear.grid(row=0, column=8, padx=5, pady=20)
+        save_data=Button(screen, text = "Next" ,command=Data)
+        save_data.grid(row=3,column=1)
+        
 
-        cr2 = Label(screen, text="Generate Strong Password :", font=('Arial', 10))
-        cr2.grid(row=1,column=4, padx=5,pady=20)
 
-        entrer2 = Entry(screen, text='',width=40)
-        entrer2.grid(row=1,column=5, padx=5,pady=20)
 
-        but2 = Button(screen, text="Generate", command=rand2)
-        but2.grid(row=1,column=6, padx=5,pady=20)
 
-        save2 = Button(screen, text="Save", command=Save2)
-        save2.grid(row=1,column=7,padx=5,pady=20)
-
-        clear2 = Button(screen, text="Clear", command=Clear2)
-        clear2.grid(row=1,column=8,padx=5,pady=20)
-
-        entrer3 = Entry(screen, text='')
-        entrer3.grid(row=2,column=5, padx=5,pady=20)
-        but3 = Button(screen, text="Generate", command=rand3)
-        but3.grid(row=2,column=6, padx=5,pady=20)
-        save3 = Button(screen, text="Save", command=Save3)
-        save3.grid(row=2,column=7,padx=5,pady=20)
-        clear3 = Button(screen, text="Clear", command=Clear3)
-        clear3.grid(row=2,column=8,padx=5,pady=20)
-        cr4 = Label(screen, text="Specify Password Length :", font=('Arial', 10))
-        cr4.grid(row=2,column=4, padx=5,pady=20)
-        entrer4 = Entry(screen, text='')
-        entrer4.grid(row=3,column=5, padx=5,pady=20)
-
-        br7 = Label(screen, text="Check Password Strength :", font=('Arial', 10))
-        br7.grid(row=4,column=4, padx=5,pady=20)
-        entry_password = Entry(screen, text='',width=40)
-        entry_password.grid(row=4,column=5, padx=5,pady=20)
-        but7 = Button(screen, text="Check", command=rand7)
-        but7.grid(row=4,column=6, padx=5,pady=20)
-        clear4 = Button(screen, text="Clear", command=Clear4)
-        clear4.grid(row=4,column=7,padx=5,pady=20)
 
 def rand():
     password = ''
     for i in range (7):
         password = password + str(randint(1,6))
-    entrer.insert(0,password)
+    wp_ok.insert(0,password)
 
 def Save():
-    password = entrer.get()
+    password = wp_ok.get()
     with open("weak_passwords.txt", "a") as f:
         f.write(password)
 
 def Clear():
-    entrer.delete(0,END)
-
-
-def rand2():
-    password = ''
-    for i in range (13):
-        password = password + chr(randint(33,126))
-    entrer2.insert(0,password)
-
-def Save2():
-    password = entrer2.get()
-    with open("strong_passwords.txt", "a") as f:
-        f.write(password)
-
-def Clear2():
-    try:
-        entrer2.delete(0,END)
-    except:
-        messagebox.showerror("Error","Error404")
+    wp_ok.delete(0,END)
 
 def rand2():
     password = ''
     for i in range (13):
         password = password + chr(randint(33,126))
-    entrer2.insert(0,password)
+    sp_ok.insert(0,password)
 
 def Save2():
-    password = entrer2.get()
+    password = sp_ok.get()
     with open("strong_passwords.txt", "a") as f:
         f.write(password)
 
 def Clear2():
     try:
-        entrer2.delete(0,END)
+        sp_ok.delete(0,END)
     except:
         messagebox.showerror("Error","Error404")
 
-def rand3():
-    try:
-        length = int(entrer3.get())
-        password = ''
-        for i in range (length):
-            password = password + chr(randint(33,126))
-        entrer4.insert(0,password)
-    except:
-        messagebox.showerror("Error","Please write a number")
+def generate_email():
+    f_name = ["Ali","Mustapha","Amine","Oussama"]
+    l_name = ["Ouachou","Salimi","Katiri","Youssefi"]
+
+    rand_num = randint(20,99)
+    x=choice(f_name)
+    y=choice(l_name)
+    rand_email=f"{x.lower()}{y.lower()}{rand_num}@gmail.com"
+    eg_ok.insert(0,rand_email)
+      
 
 def Save3():
-    try:
-        password = entrer4.get()
-        with open("Your_passwords.txt", "a") as f:
-            f.write(password)
-    except:
-        messagebox.showerror("Error","Error404")
+    password = eg_ok.get()
+    with open("email.txt", "a") as f:
+        f.write(password)
+    
 def Clear3():
     try:
-        entrer4.delete(0,END)
+        eg_ok.delete(0,END)
     except:
         messagebox.showerror("Error","Error404")
 
-def rand7():
-    try:
-        entered_password = entry_password.get()
-        with open("password.txt", "r") as f:
-            for i in f:
-                if entered_password == i.strip():
-                    messagebox.showwarning("Result", "Password is weak ,choose one from strong password option !")
-                    break
-            else:
-                messagebox.showinfo("Result", "Password is strong.")
-    except:
-        messagebox.showerror("Error")
-def Clear4():
-    entry_password.delete(0,END)
+def Data():
+    w =  sp_ok.get()
+    i = eg_ok.get()
+    y = f"Your Email : {i} \n Your Password : {w}"
+    messagebox.showinfo("Data",y)
 
 
-        
 img = PhotoImage(file="a.png")
 root.iconphoto(False,img)
 
@@ -201,6 +162,8 @@ user.bind('<FocusIn>', on_enter)
 user.bind('<FocusOut>', on_leave)
 
 Frame(frame,width=295,height=2,bg='black').place(x=25,y=107)
+
+
 
 root.mainloop()
 
