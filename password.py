@@ -2,8 +2,7 @@
 from tkinter import *
 from random import *
 from tkinter import messagebox
-from tkinter import ttk
-import csv
+
 
 root=Tk()
 entrer = None
@@ -11,8 +10,6 @@ root.title('Password and Email Manager')
 root.geometry('925x500+300+200')
 root.configure(bg="#fff")
 root.resizable(False,False)
-
-
 
 
 
@@ -29,7 +26,7 @@ def Enter():
         screen.title("Password and Email Manager")
         img = PhotoImage(file="a.png")
         screen.iconphoto(False,img) 
-        screen.geometry('560x150')
+        screen.geometry('572x150')
 
 
 
@@ -69,12 +66,46 @@ def Enter():
 
         save_data=Button(screen, text = "Next" ,command=Data)
         save_data.grid(row=3,column=1)
-        
 
         
 
+        button_style = {'bg': '#57a1f8', 'fg': 'white', 'border': 0}
+
+        Button(frame, width=39, pady=7, text='Enter', command=Enter, **button_style).place(x=35, y=120)
+        save_data = Button(screen, text="Next", command=Data,font='calibri', **button_style)
+        save_data.grid(row=3, column=1)
 
 
+
+
+        clear_button_style = {'bg': '#ff6b6b', 'fg': 'white', 'border': 0}
+
+        clear_wp = Button(screen, text="Clear", command=Clear,font='calibri', **clear_button_style)
+        clear_wp.grid(row=0, column=4, padx=5, pady=5)
+        clear_sp = Button(screen, text="Clear", command=Clear2,font='calibri', **clear_button_style)
+        clear_sp.grid(row=1, column=4, padx=5, pady=5)
+        clear_eg = Button(screen, text="Clear", command=Clear3,font='calibri', **clear_button_style)
+        clear_eg.grid(row=2, column=4, padx=5, pady=5)
+
+
+        generate_button_style = {'bg': '#4caf50', 'fg': 'white', 'border': 0}
+
+        gen_wp = Button(screen, text="Generate", command=rand,font='calibri', **generate_button_style)
+        gen_wp.grid(row=0, column=2, padx=10, pady=5)
+        gen_sp = Button(screen, text="Generate", command=rand2,font='calibri', **generate_button_style)
+        gen_sp.grid(row=1, column=2, padx=0, pady=5)
+        eg_button = Button(screen, text="Generate", command=generate_email,font='calibri', **generate_button_style)
+        eg_button.grid(row=2, column=2)
+
+
+        save_button_style = {'bg': 'Blue', 'fg': 'white', 'border': 0}
+
+        save_wp = Button(screen, text="Save", command=Save,font='calibri', **save_button_style)
+        save_wp.grid(row=0, column=3, padx=0, pady=5)
+        save_sp = Button(screen, text="Save", command=Save2,font='calibri', **save_button_style)
+        save_sp.grid(row=1, column=3, padx=0, pady=5)
+        save_eg = Button(screen, text="Save", command=Save3,font='calibri', **save_button_style)
+        save_eg.grid(row=2, column=3, padx=0, pady=5)
 
 
 def rand():
