@@ -2,6 +2,7 @@
 from tkinter import *
 from random import *
 from tkinter import messagebox
+from tkinter import ttk
 import csv
 
 root=Tk()
@@ -10,6 +11,8 @@ root.title('Password and Email Manager')
 root.geometry('925x500+300+200')
 root.configure(bg="#fff")
 root.resizable(False,False)
+
+
 
 
 
@@ -27,6 +30,8 @@ def Enter():
         img = PhotoImage(file="a.png")
         screen.iconphoto(False,img) 
         screen.geometry('560x150')
+
+
 
 
         wp = Label(screen, text="Generate Weak Password :", font=('Arial', 10))
@@ -64,6 +69,8 @@ def Enter():
 
         save_data=Button(screen, text = "Next" ,command=Data)
         save_data.grid(row=3,column=1)
+        
+
         
 
 
