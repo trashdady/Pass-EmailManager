@@ -6,7 +6,7 @@ import csv
 
 root=Tk()
 entrer = None
-root.title('Password Manager')
+root.title('Password and Email Manager')
 root.geometry('925x500+300+200')
 root.configure(bg="#fff")
 root.resizable(False,False)
@@ -23,7 +23,7 @@ def Enter():
         messagebox.showerror("Error","the username can't contain numbers !")
     elif username.isalpha():
         screen=Toplevel(root)
-        screen.title("Password Manager")
+        screen.title("Password and Email Manager")
         img = PhotoImage(file="a.png")
         screen.iconphoto(False,img) 
         screen.geometry('560x150')
